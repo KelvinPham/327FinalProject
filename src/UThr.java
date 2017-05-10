@@ -1,9 +1,12 @@
 import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class UThr extends Thread implements Runnable {
 	public ConcurrentLinkedQueue<Node> requestQue;
 	public ConcurrentLinkedQueue<Node> resultQue;
+	public static Lock printLock = new ReentrantLock();
 	public UThr(ConcurrentLinkedQueue<Node> request, ConcurrentLinkedQueue<Node> result){
 		this.requestQue = request;
 		this.resultQue = result;
@@ -36,8 +39,11 @@ public class UThr extends Thread implements Runnable {
 			}
 		}
 		while(true){
+			printLock.lock();
 			if(!resultQue.isEmpty())
-			System.out.println(resultQue.poll().getMessage());
+				System.out.println(resultQue.poll().getMessage());
+
+			printLock.unlock();
 		}
 	}
 }
