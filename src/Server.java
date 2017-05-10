@@ -81,7 +81,7 @@ public class Server {
 							option = Character.getNumericValue(in.read());
 
 							switch(option){
-							case 1:
+							case 2:
 								fibLock.lock();
 								if(a.get("evenFib") == 16)
 									a.put("evenFib", 1);
@@ -92,7 +92,7 @@ public class Server {
 								out.println(fibonacci);
 							fibLock.unlock();
 							break;
-							case 2:
+							case 3:
 								randLock.lock();
 
 								int newNumber = nextLargerRand(prevNumber,
@@ -107,7 +107,7 @@ public class Server {
 								}
 							randLock.unlock();
 							break;
-							case 3:
+							case 4:
 								primeLock.lock();
 								int prime = nextPrime(a.get("nextPrime"));
 								if(prime<0) {

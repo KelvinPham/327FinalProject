@@ -17,6 +17,7 @@ public class NetworkThr {
 		try {
 			DataOutputStream outToServer = new DataOutputStream(sock.getOutputStream());
 			BufferedReader inFromServer = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+			request = Integer.toString(n.getCommand());
 			outToServer.writeBytes(request + '\n');
 			n.setCommand(Integer.parseInt(inFromServer.readLine()));
 			resultQue.add(n);

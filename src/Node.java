@@ -10,7 +10,7 @@ public class Node {
 	}
 
 	public String toString() {
-		return "Interation: " + cmdNum + " Thread ID: " + id + ": " + message;
+		return "Command: " + cmdNum + " Thread ID: " + id + ": " + message;
 	}
 	public void setCommand(int r)
 	{

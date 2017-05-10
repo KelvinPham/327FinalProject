@@ -13,6 +13,8 @@ public class RuntimeThr extends Thread implements Runnable{
 	public RuntimeThr(ConcurrentLinkedQueue<Node> request, ConcurrentLinkedQueue<Node> result) {
 		this.requestQue = request;
 		this.resultQue = result;
+		uThrList = new LinkedList<UThr>();
+
 		try {
 			clientSocket = new Socket("localhost", 1337);
 		} catch (Exception e) {
@@ -28,10 +30,7 @@ public class RuntimeThr extends Thread implements Runnable{
 		while(true){
 			while(!requestQue.isEmpty()) {
 				Node request = requestQue.peek();
-				
 				System.out.println("REQUEST: " + request);
-
-
 				if(request.getCommand() == 0 || request.getCommand() == 1 ) {
 					new LocalThr(request, resultQue).run();
 					//RuntimeThr.evenOddSequence++;
