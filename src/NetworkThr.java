@@ -26,9 +26,5 @@ public class NetworkThr {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		/*
-		resultQue.add("DEVIN " + request);
-		*/
 	}
 }

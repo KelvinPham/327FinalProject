@@ -3,45 +3,33 @@ import java.net.*;
 import java.util.concurrent.*;
 
 public class LocalThr extends Thread implements Runnable {
-	public int x;
-	public String request;
-	public ConcurrentLinkedQueue<String> resultQue;
+	public static int even = 0, odd = 1, evenCount = 1, oddCount = 1;
+	public Node request;
+	public ConcurrentLinkedQueue<Node> resultQue;
 
-	public LocalThr(String cmd, ConcurrentLinkedQueue<String> r) {
-		this.request = cmd; 
+	public LocalThr(Node cmd, ConcurrentLinkedQueue<Node> r) {
+		this.request = cmd;
 		this.resultQue = r;
-		this.x = RuntimeThr.evenOddSequence;
+		// this.x = RuntimeThr.evenOddSequence;
 	}
-	
+
 	public void run() {
 		int result = 0;
-		if(x > 10) {
-			x = 0;
-		}
-
 		if (request.equals("0"))
-			result = setNextEven();
+			result = nextEven();
 		else
-			result = setNextOdd();
+			result = nextOdd();
+		long n = this.getId();
+		request.
 
 		resultQue.add(request + " " + result);
 	}
-	
-	public int setNextEven() {
-		while(x % 2 != 0) {
-			x++;
-		}
-		RuntimeThr.evenOddSequence = x;
-		return x;
-	}
-	
-	public int setNextOdd() {
-		while(x % 2 != 1){
-			x++;
-		}
-		
-		RuntimeThr.evenOddSequence = x;
 
-		return x;
+	public int nextEven() {
+		return even += 2;
+	}
+
+	public int nextOdd() {
+		return odd += 2;
 	}
 }

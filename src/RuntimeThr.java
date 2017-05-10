@@ -29,7 +29,7 @@ public class RuntimeThr extends Thread implements Runnable{
 
 				if(request.equals("0") || request.equals("1")) {
 					new LocalThr(request, resultQue).run();
-					RuntimeThr.evenOddSequence++;
+					//RuntimeThr.evenOddSequence++;
 
 					//System.out.println("Spawned local thr");
 				} else {
