@@ -2,9 +2,9 @@ import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class UThr extends Thread implements Runnable {
-	public ConcurrentLinkedQueue<String> requestQue;
-	public ConcurrentLinkedQueue<String> resultQue;
-	public UThr(ConcurrentLinkedQueue<String> request, ConcurrentLinkedQueue<String> result){
+	public ConcurrentLinkedQueue<Node> requestQue;
+	public ConcurrentLinkedQueue<Node> resultQue;
+	public UThr(ConcurrentLinkedQueue<Node> request, ConcurrentLinkedQueue<Node> result){
 		this.requestQue = request;
 		this.resultQue = result;
 	}
@@ -14,23 +14,24 @@ public class UThr extends Thread implements Runnable {
 			int x = ran.nextInt(5); // Chooses random number from 0 - 4
 			switch(x){
 			case 0:
-				requestQue.add("0");
+				//public Node(int i, int cmdN, String r)
+				requestQue.add(new Node(this.getId(), x , "NEXTEVEN"));
 				break;
 
 			case 1:
-				requestQue.add("1");
+				requestQue.add(new Node(this.getId(), x , "NEXTODD"));
 				break;
 
 			case 2:
-				requestQue.add("2");
+				requestQue.add(new Node(this.getId(), x , "NEXTEVENFIB"));
 				break;
 
 			case 3:
-				requestQue.add("3");
+				requestQue.add(new Node(this.getId(), x , "NEXTLARGERRAND"));
 				break;
 
 			case 4:
-				requestQue.add("4");
+				requestQue.add(new Node(this.getId(), x , "NEXTPRIME"));
 				break;
 			}
 		}

@@ -1,22 +1,22 @@
 public class Node {
-	public int id;
+	public long id;
 	public int cmdNum;
-	public String request;
+	public String message;
 
-	public Node(int i, int cmdN, String r){
+	public Node(long i, int cmdN, String r){
 		this.id = i;
 		this.cmdNum = cmdN;
-		this.request = r;
+		this.message = r;
 	}
 
 	public String toString() {
-		return "Interation: " + cmdNum + " Thread ID: " + id + ": " + request;
+		return "Interation: " + cmdNum + " Thread ID: " + id + ": " + message;
 	}
 	public void setCommand(int r)
 	{
 		cmdNum = r;
 	}
-	public int getThreadId()
+	public long getThreadId()
 	{
 		return id;
 	}
@@ -24,8 +24,12 @@ public class Node {
 	{
 		return cmdNum;
 	}
-	public String getRequest()
+	public String getMessage()
 	{
-		return request;
+		return message;
+	}
+	public void setMessage(String m, int s)
+	{
+		message =  m + " " +s ;
 	}
 }

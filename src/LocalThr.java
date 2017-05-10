@@ -10,19 +10,22 @@ public class LocalThr extends Thread implements Runnable {
 	public LocalThr(Node cmd, ConcurrentLinkedQueue<Node> r) {
 		this.request = cmd;
 		this.resultQue = r;
-		// this.x = RuntimeThr.evenOddSequence;
 	}
 
 	public void run() {
 		int result = 0;
-		if (request.equals("0"))
+		if (request.getCommand() == 0){
 			result = nextEven();
-		else
+		request.setMessage("NEXTEVEN: ",result);
+		}
+		else{
 			result = nextOdd();
-		long n = this.getId();
-		request.
+			request.setMessage("NEXTODD: ",result);
 
-		resultQue.add(request + " " + result);
+		}
+		long n = this.getId();
+
+		resultQue.add(request);
 	}
 
 	public int nextEven() {
@@ -31,5 +34,8 @@ public class LocalThr extends Thread implements Runnable {
 
 	public int nextOdd() {
 		return odd += 2;
+	}
+	public Node getNode(){
+		return request;
 	}
 }

@@ -4,11 +4,11 @@ import java.net.UnknownHostException;
 import java.util.concurrent.*;
 
 public class RuntimeThr extends Thread implements Runnable{
-	public ConcurrentLinkedQueue<String> requestQue;
-	public ConcurrentLinkedQueue<String> resultQue;
+	public ConcurrentLinkedQueue<Node> requestQue;
+	public ConcurrentLinkedQueue<Node> resultQue;
 	public Socket clientSocket;
 
-	public RuntimeThr(ConcurrentLinkedQueue<String> request, ConcurrentLinkedQueue<String> result) {
+	public RuntimeThr(ConcurrentLinkedQueue<Node> request, ConcurrentLinkedQueue<Node> result) {
 		this.requestQue = request;
 		this.resultQue = result;
 		try {
@@ -22,12 +22,12 @@ public class RuntimeThr extends Thread implements Runnable{
 	public void run() {
 		while(true){
 			while(!requestQue.isEmpty()) {
-				String request = requestQue.peek();
+				Node request = requestQue.peek();
 				
 				System.out.println("REQUEST: " + request);
 
 
-				if(request.equals("0") || request.equals("1")) {
+				if(request.getCommand() == 0 || request.getCommand() == 1 ) {
 					new LocalThr(request, resultQue).run();
 					//RuntimeThr.evenOddSequence++;
 
