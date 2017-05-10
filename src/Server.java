@@ -3,10 +3,14 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.concurrent.locks.*;
 
 public class Server {
 	public static final int PORT = 1337;
-
+	public static Lock fibLock = new ReentrantLock();
+	public static Lock primeLock = new ReentrantLock();
+	public static Lock randLock = new ReentrantLock();
+	private static int option = 0;
 	public static int nextEvenFib(int n) {
 		if (n == 1) {
 			return 2;
@@ -73,7 +77,12 @@ public class Server {
 											socket.getOutputStream()), true);
 
 							int prevNumber = 0;
-							for (int j = 1; j <= 5; j++) {
+							option = -1;
+							option = Character.getNumericValue(in.read());
+
+							switch(option){
+							case 1:
+								fibLock.lock();
 								if(a.get("evenFib") == 16)
 									a.put("evenFib", 1);
 								int fibonacci = nextEvenFib(a.get("evenFib"));
@@ -81,8 +90,10 @@ public class Server {
 								System.out.println("Sending Fibonacci: "
 										+ fibonacci);
 								out.println(fibonacci);
-							}
-							for (int j = 1; j <= 5; j++) {
+							fibLock.unlock();
+							break;
+							case 2:
+								randLock.lock();
 
 								int newNumber = nextLargerRand(prevNumber,
 										maximum);
@@ -94,8 +105,10 @@ public class Server {
 								} else {
 									prevNumber = newNumber;
 								}
-							}
-							for (int j = 1; j <= 5; j++) {
+							randLock.unlock();
+							break;
+							case 3:
+								primeLock.lock();
 								int prime = nextPrime(a.get("nextPrime"));
 								if(prime<0) {
 									a.put("nextPrime", 1);
@@ -106,8 +119,10 @@ public class Server {
 										+ prime);
 								out.println(prime);
 								//primeNumber = prime;
+							primeLock.unlock();
+			
+							break;
 							}
-
 							out.close();
 							in.close();
 							socket.close();
