@@ -1,6 +1,7 @@
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.Random;
 
 public class Server {
@@ -47,13 +48,16 @@ public class Server {
 
 	public static void main(String[] args) {
 		ServerSocket serverSocket;
+		HashMap<String, Integer> a = new HashMap<String,Integer>();
+		final HashMap pointer = a;
+		a.put("evenFib", 1);
+		a.put("nextPrime",1);
 		try {
 			serverSocket = new ServerSocket(PORT);
-			int maximum = 2147483647;
+			int maximum = Integer.MAX_VALUE;
 			while (true) {
 				Thread thread = new Thread(new Runnable() {
 					public void run() {
-
 						try {
 							Socket socket = serverSocket.accept();
 							// try {
@@ -67,13 +71,15 @@ public class Server {
 							PrintWriter out = new PrintWriter(
 									new OutputStreamWriter(
 											socket.getOutputStream()), true);
-							
-							int prevNumber = 0;
-							int primeNumber = 1;
-							
-							for (int j = 1; j <= 5; j++) {
 
-								int fibonacci = nextEvenFib(j);
+							int prevNumber = 0;
+							//int primeNumber = 1;
+
+							for (int j = 1; j <= 5; j++) {
+								if(a.get("evenFib") == 16)
+									a.put("evenFib", 1);
+								int fibonacci = nextEvenFib(a.get("evenFib"));
+								a.put("evenFib", a.get("evenFib")+1);
 								System.out.println("Sending Fibonacci: "
 										+ fibonacci);
 								out.println(fibonacci);
@@ -92,11 +98,16 @@ public class Server {
 								}
 							}
 							for (int j = 1; j <= 5; j++) {
-								int prime = (int) nextPrime(primeNumber);
+								int prime = nextPrime(a.get("nextPrime"));
+								if(prime<0) {
+									a.put("nextPrime", 1);
+									prime = nextPrime(a.get("nextPrime"));
+								}
+								a.put("nextPrime", prime);
 								System.out.println("Sending the prime number: "
 										+ prime);
 								out.println(prime);
-								primeNumber = prime;
+								//primeNumber = prime;
 							}
 
 							out.close();
@@ -108,7 +119,8 @@ public class Server {
 						}
 					}
 				});
-				thread.start();
+				thread.run();
+				//thread.start();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

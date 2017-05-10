@@ -16,12 +16,22 @@ public class NetworkThr {
 
 	public void run() {
 		try {
-			DataOutputStream outToServer = new DataOutputStream(sock.getOutputStream());
-			BufferedReader inFromServer = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-			
-			outToServer.writeBytes(request + '\n');
-			result = inFromServer.readLine();
-			resultQue.add(request + " " + result);
+//			DataOutputStream outToServer = new DataOutputStream(sock.getOutputStream());
+//			BufferedReader inFromServer = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+			BufferedReader readResult;
+			PrintWriter sendRequest;
+			readResult = new BufferedReader(
+					new InputStreamReader(sock.getInputStream()));
+			sendRequest = new PrintWriter(sock.getOutputStream(), true);
+			sendRequest.println(request);
+			result=readResult.readLine();
+			resultQue.add(request+ ":"+result);
+			readResult.close();
+			sendRequest.close();
+			sock.close();
+//			outToServer.writeBytes(request + '\n');
+//			result = inFromServer.readLine();
+//			resultQue.add(request + " " + result);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
