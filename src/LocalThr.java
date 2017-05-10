@@ -2,7 +2,7 @@ import java.io.*;
 import java.net.*;
 import java.util.concurrent.*;
 
-public class LocalThr extends Thread {
+public class LocalThr extends Thread implements Runnable {
 	public int x;
 	public String request;
 	public ConcurrentLinkedQueue<String> resultQue;
@@ -19,7 +19,7 @@ public class LocalThr extends Thread {
 			x = 0;
 		}
 
-		if (request.equals("NEXTEVEN"))
+		if (request.equals("0"))
 			result = setNextEven();
 		else
 			result = setNextOdd();
