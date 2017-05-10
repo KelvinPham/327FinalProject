@@ -35,5 +35,9 @@ public class UThr extends Thread implements Runnable {
 				break;
 			}
 		}
+		while(true){
+			if(!resultQue.isEmpty())
+			System.out.println(resultQue.poll().getMessage());
+		}
 	}
 }

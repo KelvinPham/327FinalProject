@@ -18,8 +18,13 @@ public class NetworkThr {
 			DataOutputStream outToServer = new DataOutputStream(sock.getOutputStream());
 			BufferedReader inFromServer = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 			request = Integer.toString(n.getCommand());
+			String[] commandString = n.toString().split(" ");
+			String command= commandString[commandString.length-1];
 			outToServer.writeBytes(request + '\n');
-			n.setCommand(Integer.parseInt(inFromServer.readLine()));
+			String resultValue=inFromServer.readLine();
+			//n.setCommand(Integer.parseInt(asd));
+			n.setMessage(command, Integer.parseInt(resultValue));
+			//System.out.println("n:"+ asd);
 			resultQue.add(n);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -78,8 +78,8 @@ public class Server {
 
 							int prevNumber = 0;
 							option = -1;
+							System.out.println("??ASD");
 							option = Character.getNumericValue(in.read());
-
 							switch(option){
 							case 2:
 								fibLock.lock();
@@ -120,7 +120,7 @@ public class Server {
 								out.println(prime);
 								//primeNumber = prime;
 							primeLock.unlock();
-			
+
 							break;
 							}
 							out.close();
