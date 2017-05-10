@@ -1,12 +1,14 @@
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.LinkedList;
 import java.util.concurrent.*;
 
 public class RuntimeThr extends Thread implements Runnable{
 	public ConcurrentLinkedQueue<Node> requestQue;
 	public ConcurrentLinkedQueue<Node> resultQue;
 	public Socket clientSocket;
+	public LinkedList<UThr> uThrList;
 
 	public RuntimeThr(ConcurrentLinkedQueue<Node> request, ConcurrentLinkedQueue<Node> result) {
 		this.requestQue = request;
@@ -17,6 +19,9 @@ public class RuntimeThr extends Thread implements Runnable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	public void addThrList(UThr u){
+		uThrList.add(u);
 	}
 
 	public void run() {
