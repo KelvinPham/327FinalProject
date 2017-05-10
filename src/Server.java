@@ -70,6 +70,7 @@ public class Server {
 							
 							int prevNumber = 0;
 							int primeNumber = 1;
+							
 							for (int j = 1; j <= 5; j++) {
 
 								int fibonacci = nextEvenFib(j);
